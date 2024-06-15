@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concentration Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>DailyCalcs</h1>
+        </header>
+        <main>
+            <div class="input-group">
+                <label for="stock-concentration">Stock concentration</label>
+                <input type="number" id="stock-concentration" placeholder="mM">
+            </div>
+            <div class="input-group">
+                <label for="desired-concentration">Desired concentration</label>
+                <input type="number" id="desired-concentration" placeholder="mM">
+            </div>
+            <div class="input-group">
+                <label for="desired-volume">Desired volume</label>
+                <input type="number" id="desired-volume" placeholder="ml">
+            </div>
+            <div class="result">
+                <span>Additional stock</span>
+                <span id="additional-stock">0.00 ml</span>
+            </div>
+            <button onclick="calculate()">Calculate</button>
+        </main>
+        <footer>
+            <button onclick="resetForm()">Reset</button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
