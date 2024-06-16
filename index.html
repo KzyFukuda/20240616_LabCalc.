@@ -2,64 +2,133 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molarity and Solution Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Lab. Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Molarity Calculator</h1>
+            <h1>Lab. Calculator</h1>
             <nav>
-                <a href="#" id="molarity-link">Molarity</a> | 
-                <a href="#" id="solution-link">Solution</a>
+                <a href="#" id="molarity-link" class="nav-link">Molarity</a> | 
+                <a href="#" id="mol-conc-link" class="nav-link">Mol Conc.</a> | 
+                <a href="#" id="mass-conc-link" class="nav-link">Mass Conc.</a>
             </nav>
         </header>
         <main id="content">
             <!-- Molarity Calculator Page -->
             <div id="molarity-page">
                 <div class="input-group">
-                    <label for="chemical-formula">Chemical formula</label>
-                    <input type="text" id="chemical-formula" placeholder="Case-sensitive, e.g. NaCl">
-                </div>
-                <div class="input-group">
                     <label for="molecular-weight">Molecular weight</label>
                     <input type="number" id="molecular-weight" placeholder="g/mol">
                 </div>
                 <div class="input-group">
                     <label for="molar-solution">Molar solution</label>
-                    <input type="number" id="molar-solution" placeholder="M">
+                    <input type="number" id="molar-solution" placeholder="0">
+                    <select id="molar-solution-unit" onchange="updateMolarityUnit()">
+                        <option value="1">M</option>
+                        <option value="0.001">mM</option>
+                        <option value="0.000001">uM</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="final-volume">Final volume</label>
-                    <input type="number" id="final-volume" placeholder="ml">
+                    <input type="number" id="final-volume" placeholder="0">
+                    <select id="final-volume-unit" onchange="updateVolumeUnit()">
+                        <option value="1">L</option>
+                        <option value="0.001">ml</option>
+                        <option value="0.000001">ul</option>
+                    </select>
                 </div>
-                <div class="result">
-                    <span>Required mass</span>
-                    <span id="required-mass">0.00 g</span>
+                <div class="input-group">
+                    <label for="required-mass">Required mass</label>
+                    <input type="number" id="required-mass" placeholder="0.00">
+                    <select id="required-mass-unit" onchange="updateMassUnit()">
+                        <option value="1">g</option>
+                        <option value="0.001">mg</option>
+                        <option value="0.000001">ug</option>
+                    </select>
                 </div>
                 <button onclick="calculateMolarity()">Calculate</button>
             </div>
 
-            <!-- Solution Calculator Page -->
-            <div id="solution-page" style="display: none;">
+            <!-- Mol Conc. Calculator Page -->
+            <div id="mol-conc-page" style="display: none;">
                 <div class="input-group">
                     <label for="stock-concentration">Stock concentration</label>
-                    <input type="number" id="stock-concentration" placeholder="mM">
+                    <input type="number" id="stock-concentration" placeholder="0">
+                    <select id="stock-concentration-unit" onchange="updateSolutionUnit()">
+                        <option value="1">M</option>
+                        <option value="0.001">mM</option>
+                        <option value="0.000001">uM</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="desired-concentration">Desired concentration</label>
-                    <input type="number" id="desired-concentration" placeholder="mM">
+                    <input type="number" id="desired-concentration" placeholder="0">
+                    <select id="desired-concentration-unit" onchange="updateSolutionUnit()">
+                        <option value="1">M</option>
+                        <option value="0.001">mM</option>
+                        <option value="0.000001">uM</option>
+                    </select>
                 </div>
                 <div class="input-group">
                     <label for="desired-volume">Desired volume</label>
-                    <input type="number" id="desired-volume" placeholder="ml">
+                    <input type="number" id="desired-volume" placeholder="0">
+                    <select id="desired-volume-unit" onchange="updateVolumeUnit()">
+                        <option value="1">L</option>
+                        <option value="0.001">ml</option>
+                        <option value="0.000001">ul</option>
+                    </select>
                 </div>
-                <div class="result">
-                    <span>Additional stock</span>
-                    <span id="additional-stock">0.00 ml</span>
+                <div class="input-group">
+                    <label for="additional-stock">Additional stock</label>
+                    <input type="number" id="additional-stock" placeholder="0.00">
+                    <select id="additional-stock-unit" onchange="updateVolumeUnit()">
+                        <option value="1">L</option>
+                        <option value="0.001">ml</option>
+                        <option value="0.000001">ul</option>
+                    </select>
                 </div>
                 <button onclick="calculateSolution()">Calculate</button>
+            </div>
+
+            <!-- Mass Conc. Calculator Page -->
+            <div id="mass-conc-page" style="display: none;">
+                <div class="input-group">
+                    <label for="mass-stock-concentration">Stock concentration</label>
+                    <input type="number" id="mass-stock-concentration" placeholder="0">
+                    <select id="mass-stock-concentration-unit" onchange="updateMassConcUnit()">
+                        <option value="1">w/v%</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="mass-desired-concentration">Desired concentration</label>
+                    <input type="number" id="mass-desired-concentration" placeholder="0">
+                    <select id="mass-desired-concentration-unit" onchange="updateMassConcUnit()">
+                        <option value="1">w/v%</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="mass-desired-volume">Desired volume</label>
+                    <input type="number" id="mass-desired-volume" placeholder="0">
+                    <select id="mass-desired-volume-unit" onchange="updateMassVolumeUnit()">
+                        <option value="1">L</option>
+                        <option value="0.001">ml</option>
+                        <option value="0.000001">ul</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="mass-additional-stock">Additional stock</label>
+                    <input type="number" id="mass-additional-stock" placeholder="0.00">
+                    <select id="mass-additional-stock-unit" onchange="updateVolumeUnit()">
+                        <option value="1">L</option>
+                        <option value="0.001">ml</option>
+                        <option value="0.000001">ul</option>
+                    </select>
+                </div>
+                <button onclick="calculateMassConc()">Calculate</button>
             </div>
         </main>
         <footer>
