@@ -3,32 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concentration Calculator</title>
+    <title>Molarity and Solution Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>DailyCalcs</h1>
+            <h1>Molarity Calculator</h1>
+            <nav>
+                <a href="#" id="molarity-link">Molarity</a> | 
+                <a href="#" id="solution-link">Solution</a>
+            </nav>
         </header>
-        <main>
-            <div class="input-group">
-                <label for="stock-concentration">Stock concentration</label>
-                <input type="number" id="stock-concentration" placeholder="mM">
+        <main id="content">
+            <!-- Molarity Calculator Page -->
+            <div id="molarity-page">
+                <div class="input-group">
+                    <label for="chemical-formula">Chemical formula</label>
+                    <input type="text" id="chemical-formula" placeholder="Case-sensitive, e.g. NaCl">
+                </div>
+                <div class="input-group">
+                    <label for="molecular-weight">Molecular weight</label>
+                    <input type="number" id="molecular-weight" placeholder="g/mol">
+                </div>
+                <div class="input-group">
+                    <label for="molar-solution">Molar solution</label>
+                    <input type="number" id="molar-solution" placeholder="M">
+                </div>
+                <div class="input-group">
+                    <label for="final-volume">Final volume</label>
+                    <input type="number" id="final-volume" placeholder="ml">
+                </div>
+                <div class="result">
+                    <span>Required mass</span>
+                    <span id="required-mass">0.00 g</span>
+                </div>
+                <button onclick="calculateMolarity()">Calculate</button>
             </div>
-            <div class="input-group">
-                <label for="desired-concentration">Desired concentration</label>
-                <input type="number" id="desired-concentration" placeholder="mM">
+
+            <!-- Solution Calculator Page -->
+            <div id="solution-page" style="display: none;">
+                <div class="input-group">
+                    <label for="stock-concentration">Stock concentration</label>
+                    <input type="number" id="stock-concentration" placeholder="mM">
+                </div>
+                <div class="input-group">
+                    <label for="desired-concentration">Desired concentration</label>
+                    <input type="number" id="desired-concentration" placeholder="mM">
+                </div>
+                <div class="input-group">
+                    <label for="desired-volume">Desired volume</label>
+                    <input type="number" id="desired-volume" placeholder="ml">
+                </div>
+                <div class="result">
+                    <span>Additional stock</span>
+                    <span id="additional-stock">0.00 ml</span>
+                </div>
+                <button onclick="calculateSolution()">Calculate</button>
             </div>
-            <div class="input-group">
-                <label for="desired-volume">Desired volume</label>
-                <input type="number" id="desired-volume" placeholder="ml">
-            </div>
-            <div class="result">
-                <span>Additional stock</span>
-                <span id="additional-stock">0.00 ml</span>
-            </div>
-            <button onclick="calculate()">Calculate</button>
         </main>
         <footer>
             <button onclick="resetForm()">Reset</button>
