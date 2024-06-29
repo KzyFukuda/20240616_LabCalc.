@@ -1,9 +1,11 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Lab. Calculator</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,8 +13,8 @@
         <header>
             <h1>Lab. Calculator</h1>
             <nav>
-                <a href="#" id="molarity-link" class="nav-link">Molarity</a> 
-                <a href="#" id="mol-conc-link" class="nav-link">Mol Conc.</a> 
+                <a href="#" id="molarity-link" class="nav-link">Molarity</a>
+                <a href="#" id="mol-conc-link" class="nav-link">Mol Conc.</a>
                 <a href="#" id="mass-conc-link" class="nav-link">Mass Conc.</a>
             </nav>
         </header>
@@ -22,39 +24,39 @@
                 <div class="input-group">
                     <label for="molecular-weight">Molecular weight</label>
                     <div class="input-row">
-                        <input type="number" id="molecular-weight" placeholder="g/mol">
+                        <input type="number" id="molecular-weight" placeholder="g/mol" class="input-field">
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="molar-solution">Molar solution</label>
                     <div class="input-row">
-                        <input type="number" id="molar-solution" placeholder="0">
-                        <select id="molar-solution-unit" onchange="updateMolarityUnit()">
+                        <input type="number" id="molar-solution" placeholder="0" class="input-field">
+                        <select id="molar-solution-unit" onchange="updateMolarityUnit()" class="input-field">
                             <option value="1">M</option>
                             <option value="0.001">mM</option>
-                            <option value="0.000001">uM</option>
+                            <option value="0.000001">μM</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="final-volume">Final volume</label>
                     <div class="input-row">
-                        <input type="number" id="final-volume" placeholder="0">
-                        <select id="final-volume-unit" onchange="updateVolumeUnit()">
+                        <input type="number" id="final-volume" placeholder="0" class="input-field">
+                        <select id="final-volume-unit" onchange="updateVolumeUnit()" class="input-field">
                             <option value="1">L</option>
                             <option value="0.001">ml</option>
-                            <option value="0.000001">ul</option>
+                            <option value="0.000001">μl</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="required-mass">Required mass</label>
                     <div class="input-row">
-                        <input type="number" id="required-mass" placeholder="0.00">
-                        <select id="required-mass-unit" onchange="updateMassUnit()">
+                        <input type="number" id="required-mass" placeholder="0.00" class="input-field">
+                        <select id="required-mass-unit" onchange="updateMassUnit()" class="input-field">
                             <option value="1">g</option>
                             <option value="0.001">mg</option>
-                            <option value="0.000001">ug</option>
+                            <option value="0.000001">μg</option>
                         </select>
                     </div>
                 </div>
@@ -66,44 +68,44 @@
                 <div class="input-group">
                     <label for="stock-concentration">Stock concentration</label>
                     <div class="input-row">
-                        <input type="number" id="stock-concentration" placeholder="0">
-                        <select id="stock-concentration-unit" onchange="updateSolutionUnit()">
+                        <input type="number" id="stock-concentration" placeholder="0" class="input-field">
+                        <select id="stock-concentration-unit" onchange="updateSolutionUnit()" class="input-field">
                             <option value="1">M</option>
                             <option value="0.001">mM</option>
-                            <option value="0.000001">uM</option>
+                            <option value="0.000001">μM</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="desired-concentration">Desired concentration</label>
                     <div class="input-row">
-                        <input type="number" id="desired-concentration" placeholder="0">
-                        <select id="desired-concentration-unit" onchange="updateSolutionUnit()">
+                        <input type="number" id="desired-concentration" placeholder="0" class="input-field">
+                        <select id="desired-concentration-unit" onchange="updateSolutionUnit()" class="input-field">
                             <option value="1">M</option>
                             <option value="0.001">mM</option>
-                            <option value="0.000001">uM</option>
+                            <option value="0.000001">μM</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="desired-volume">Desired volume</label>
                     <div class="input-row">
-                        <input type="number" id="desired-volume" placeholder="0">
-                        <select id="desired-volume-unit" onchange="updateVolumeUnit()">
+                        <input type="number" id="desired-volume" placeholder="0" class="input-field">
+                        <select id="desired-volume-unit" onchange="updateVolumeUnit()" class="input-field">
                             <option value="1">L</option>
                             <option value="0.001">ml</option>
-                            <option value="0.000001">ul</option>
+                            <option value="0.000001">μl</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="additional-stock">Additional stock</label>
                     <div class="input-row">
-                        <input type="number" id="additional-stock" placeholder="0.00">
-                        <select id="additional-stock-unit" onchange="updateVolumeUnit()">
+                        <input type="number" id="additional-stock" placeholder="0.00" class="input-field">
+                        <select id="additional-stock-unit" onchange="updateVolumeUnit()" class="input-field">
                             <option value="1">L</option>
                             <option value="0.001">ml</option>
-                            <option value="0.000001">ul</option>
+                            <option value="0.000001">μl</option>
                         </select>
                     </div>
                 </div>
@@ -115,8 +117,8 @@
                 <div class="input-group">
                     <label for="mass-stock-concentration">Stock concentration</label>
                     <div class="input-row">
-                        <input type="number" id="mass-stock-concentration" placeholder="0">
-                        <select id="mass-stock-concentration-unit" onchange="updateMassConcUnit()">
+                        <input type="number" id="mass-stock-concentration" placeholder="0" class="input-field">
+                        <select id="mass-stock-concentration-unit" onchange="updateMassConcUnit()" class="input-field">
                             <option value="1">w/v%</option>
                         </select>
                     </div>
@@ -124,8 +126,8 @@
                 <div class="input-group">
                     <label for="mass-desired-concentration">Desired concentration</label>
                     <div class="input-row">
-                        <input type="number" id="mass-desired-concentration" placeholder="0">
-                        <select id="mass-desired-concentration-unit" onchange="updateMassConcUnit()">
+                        <input type="number" id="mass-desired-concentration" placeholder="0" class="input-field">
+                        <select id="mass-desired-concentration-unit" onchange="updateMassConcUnit()" class="input-field">
                             <option value="1">w/v%</option>
                         </select>
                     </div>
@@ -133,22 +135,22 @@
                 <div class="input-group">
                     <label for="mass-desired-volume">Desired volume</label>
                     <div class="input-row">
-                        <input type="number" id="mass-desired-volume" placeholder="0">
-                        <select id="mass-desired-volume-unit" onchange="updateMassVolumeUnit()">
+                        <input type="number" id="mass-desired-volume" placeholder="0" class="input-field">
+                        <select id="mass-desired-volume-unit" onchange="updateMassVolumeUnit()" class="input-field">
                             <option value="1">L</option>
                             <option value="0.001">ml</option>
-                            <option value="0.000001">ul</option>
+                            <option value="0.000001">μl</option>
                         </select>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="mass-additional-stock">Additional stock</label>
                     <div class="input-row">
-                        <input type="number" id="mass-additional-stock" placeholder="0.00">
-                        <select id="mass-additional-stock-unit" onchange="updateVolumeUnit()">
+                        <input type="number" id="mass-additional-stock" placeholder="0.00" class="input-field">
+                        <select id="mass-additional-stock-unit" onchange="updateVolumeUnit()" class="input-field">
                             <option value="1">L</option>
                             <option value="0.001">ml</option>
-                            <option value="0.000001">ul</option>
+                            <option value="0.000001">μl</option>
                         </select>
                     </div>
                 </div>
