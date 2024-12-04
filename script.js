@@ -37,16 +37,37 @@ function calculateMolarity() {
     const requiredMass = parseFloat(document.getElementById('required-mass').value);
     const requiredMassUnit = parseFloat(document.getElementById('required-mass-unit').value);
 
-    if (!isNaN(requiredMass) && isNaN(molecularWeight)) {
-        document.getElementById('molecular-weight').value = (requiredMass / (molarSolution * molarSolutionUnit * finalVolume * finalVolumeUnit * requiredMassUnit)).toFixed(2);
-    } else if (!isNaN(requiredMass) && isNaN(molarSolution)) {
-        document.getElementById('molar-solution').value = (requiredMass / (molecularWeight * finalVolume * finalVolumeUnit * requiredMassUnit) / molarSolutionUnit).toFixed(2);
-    } else if (!isNaN(requiredMass) && isNaN(finalVolume)) {
-        document.getElementById('final-volume').value = (requiredMass / (molecularWeight * molarSolution * molarSolutionUnit * requiredMassUnit) / finalVolumeUnit).toFixed(2);
-    } else {
+    const values = [
+        {name: 'molecularWeight', val: molecularWeight},
+        {name: 'molarSolution', val: molarSolution},
+        {name: 'finalVolume', val: finalVolume},
+        {name: 'requiredMass', val: requiredMass}
+    ];
+
+    const nanCount = values.filter(item => isNaN(item.val)).length;
+
+    if (nanCount !== 1) {
+        alert("Molarity計算では、4つのうちちょうど1つだけを空欄にしてください。");
+        return;
+    }
+
+    // 基本式: requiredMass * requiredMassUnit = molecularWeight * (molarSolution * molarSolutionUnit) * (finalVolume * finalVolumeUnit)
+    // よって:
+    // requiredMass = [molecularWeight * (molarSolution*molarSolutionUnit) * (finalVolume*finalVolumeUnit)] / requiredMassUnit
+    // molecularWeight = (requiredMass * requiredMassUnit) / [(molarSolution*molarSolutionUnit)*(finalVolume*finalVolumeUnit)]
+    // molarSolution = (requiredMass * requiredMassUnit) / [molecularWeight*(finalVolume*finalVolumeUnit)*molarSolutionUnit]
+    // finalVolume = (requiredMass * requiredMassUnit) / [molecularWeight*(molarSolution*molarSolutionUnit)*finalVolumeUnit]
+
+    if (isNaN(molecularWeight)) {
+        document.getElementById('molecular-weight').value = ((requiredMass * requiredMassUnit) / ((molarSolution * molarSolutionUnit) * (finalVolume * finalVolumeUnit))).toFixed(2);
+    } else if (isNaN(molarSolution)) {
+        document.getElementById('molar-solution').value = ((requiredMass * requiredMassUnit) / (molecularWeight * (finalVolume * finalVolumeUnit) * molarSolutionUnit)).toFixed(2);
+    } else if (isNaN(finalVolume)) {
+        document.getElementById('final-volume').value = ((requiredMass * requiredMassUnit) / (molecularWeight * (molarSolution * molarSolutionUnit) * finalVolumeUnit)).toFixed(2);
+    } else if (isNaN(requiredMass)) {
         const molarSolutionInM = molarSolution * molarSolutionUnit;
         const finalVolumeInL = finalVolume * finalVolumeUnit;
-        document.getElementById('required-mass').value = (molecularWeight * molarSolutionInM * finalVolumeInL / requiredMassUnit).toFixed(2);
+        document.getElementById('required-mass').value = ((molecularWeight * molarSolutionInM * finalVolumeInL) / requiredMassUnit).toFixed(2);
     }
 }
 
@@ -60,18 +81,38 @@ function calculateSolution() {
     const additionalStock = parseFloat(document.getElementById('additional-stock').value);
     const additionalStockUnit = parseFloat(document.getElementById('additional-stock-unit').value);
 
-    if (isNaN(additionalStock)) {
-        document.getElementById('additional-stock').value = (desiredConcentration * desiredConcentrationUnit * desiredVolume * desiredVolumeUnit / stockConcentration / stockConcentrationUnit / additionalStockUnit).toFixed(2);
-    } else if (isNaN(stockConcentration)) {
-        document.getElementById('stock-concentration').value = (desiredConcentration * desiredConcentrationUnit * desiredVolume * desiredVolumeUnit / additionalStock / additionalStockUnit / stockConcentrationUnit).toFixed(2);
+    const values = [
+        {name: 'stockConcentration', val: stockConcentration},
+        {name: 'desiredConcentration', val: desiredConcentration},
+        {name: 'desiredVolume', val: desiredVolume},
+        {name: 'additionalStock', val: additionalStock}
+    ];
+
+    const nanCount = values.filter(item => isNaN(item.val)).length;
+
+    if (nanCount !== 1) {
+        alert("Mol conc計算では、4つのうちちょうど1つだけを空欄にしてください。");
+        return;
+    }
+
+    // 関係式: C1*V1 = C2*V2
+    // C1 = stockConcentration * stockConcentrationUnit
+    // C2 = desiredConcentration * desiredConcentrationUnit
+    // V1 = additionalStock * additionalStockUnit
+    // V2 = desiredVolume * desiredVolumeUnit
+    // よって:
+    // (stockConcentration*stockConcentrationUnit)*(additionalStock*additionalStockUnit) = (desiredConcentration*desiredConcentrationUnit)*(desiredVolume*desiredVolumeUnit)
+    // additionalStock = [C2*V2/(C1)] / additionalStockUnit = (desiredConcentration*desiredConcentrationUnit*desiredVolume*desiredVolumeUnit)/(stockConcentration*stockConcentrationUnit*additionalStockUnit)
+    // 他変数も同様に解く
+
+    if (isNaN(stockConcentration)) {
+        document.getElementById('stock-concentration').value = ((desiredConcentration * desiredConcentrationUnit * desiredVolume * desiredVolumeUnit) / (additionalStock * additionalStockUnit * stockConcentrationUnit)).toFixed(2);
     } else if (isNaN(desiredConcentration)) {
-        document.getElementById('desired-concentration').value = (additionalStock * additionalStockUnit * stockConcentration * stockConcentrationUnit / desiredVolume / desiredVolumeUnit / desiredConcentrationUnit).toFixed(2);
+        document.getElementById('desired-concentration').value = ((stockConcentration * stockConcentrationUnit * additionalStock * additionalStockUnit) / (desiredVolume * desiredVolumeUnit * desiredConcentrationUnit)).toFixed(2);
     } else if (isNaN(desiredVolume)) {
-        document.getElementById('desired-volume').value = (additionalStock * additionalStockUnit * stockConcentration * stockConcentrationUnit / desiredConcentration / desiredConcentrationUnit / desiredVolumeUnit).toFixed(2);
-    } else {
-        const desiredVolumeInL = desiredVolume * desiredVolumeUnit;
-        const additionalStockInL = additionalStock * additionalStockUnit;
-        document.getElementById('additional-stock').value = (desiredConcentration * desiredVolumeInL / stockConcentration).toFixed(2);
+        document.getElementById('desired-volume').value = ((stockConcentration * stockConcentrationUnit * additionalStock * additionalStockUnit) / (desiredConcentration * desiredConcentrationUnit * desiredVolumeUnit)).toFixed(2);
+    } else if (isNaN(additionalStock)) {
+        document.getElementById('additional-stock').value = ((desiredConcentration * desiredConcentrationUnit * desiredVolume * desiredVolumeUnit) / (stockConcentration * stockConcentrationUnit * additionalStockUnit)).toFixed(2);
     }
 }
 
@@ -85,21 +126,37 @@ function calculateMassConc() {
     const massAdditionalStock = parseFloat(document.getElementById('mass-additional-stock').value);
     const massAdditionalStockUnit = parseFloat(document.getElementById('mass-additional-stock-unit').value);
 
-    if (isNaN(massAdditionalStock)) {
-        document.getElementById('mass-additional-stock').value = (massDesiredConcentration * massDesiredConcentrationUnit * massDesiredVolume * massDesiredVolumeUnit / massStockConcentration / massStockConcentrationUnit / massAdditionalStockUnit).toFixed(2);
-    } else if (isNaN(massStockConcentration)) {
-        document.getElementById('mass-stock-concentration').value = (massDesiredConcentration * massDesiredConcentrationUnit * massDesiredVolume * massDesiredVolumeUnit / massAdditionalStock / massAdditionalStockUnit / massStockConcentrationUnit).toFixed(2);
+    const values = [
+        {name: 'massStockConcentration', val: massStockConcentration},
+        {name: 'massDesiredConcentration', val: massDesiredConcentration},
+        {name: 'massDesiredVolume', val: massDesiredVolume},
+        {name: 'massAdditionalStock', val: massAdditionalStock}
+    ];
+
+    const nanCount = values.filter(item => isNaN(item.val)).length;
+
+    if (nanCount !== 1) {
+        alert("Mass conc計算では、4つのうちちょうど1つだけを空欄にしてください。");
+        return;
+    }
+
+    // 同様にC1*V1 = C2*V2として計算可能
+    // ここではmassの場合も同様の式で処理。（質量濃度で同様の計算が成り立つ前提）
+    // (massStockConcentration*massStockConcentrationUnit)*(massAdditionalStock*massAdditionalStockUnit) = (massDesiredConcentration*massDesiredConcentrationUnit)*(massDesiredVolume*massDesiredVolumeUnit)
+    // 以下同様に解く
+
+    if (isNaN(massStockConcentration)) {
+        document.getElementById('mass-stock-concentration').value = ((massDesiredConcentration * massDesiredConcentrationUnit * massDesiredVolume * massDesiredVolumeUnit) / (massAdditionalStock * massAdditionalStockUnit * massStockConcentrationUnit)).toFixed(2);
     } else if (isNaN(massDesiredConcentration)) {
-        document.getElementById('mass-desired-concentration').value = (massAdditionalStock * massAdditionalStockUnit * massStockConcentration * massStockConcentrationUnit / massDesiredVolume / massDesiredVolumeUnit / massDesiredConcentrationUnit).toFixed(2);
+        document.getElementById('mass-desired-concentration').value = ((massStockConcentration * massStockConcentrationUnit * massAdditionalStock * massAdditionalStockUnit) / (massDesiredVolume * massDesiredVolumeUnit * massDesiredConcentrationUnit)).toFixed(2);
     } else if (isNaN(massDesiredVolume)) {
-        document.getElementById('mass-desired-volume').value = (massAdditionalStock * massAdditionalStockUnit * massStockConcentration * massStockConcentrationUnit / massDesiredConcentration / massDesiredConcentrationUnit / massDesiredVolumeUnit).toFixed(2);
-    } else {
-        const massDesiredVolumeInL = massDesiredVolume * massDesiredVolumeUnit;
-        const massAdditionalStockInL = massAdditionalStock * massAdditionalStockUnit;
-        document.getElementById('mass-additional-stock').value = (massDesiredConcentration * massDesiredVolumeInL / massStockConcentration).toFixed(2);
+        document.getElementById('mass-desired-volume').value = ((massStockConcentration * massStockConcentrationUnit * massAdditionalStock * massAdditionalStockUnit) / (massDesiredConcentration * massDesiredConcentrationUnit * massDesiredVolumeUnit)).toFixed(2);
+    } else if (isNaN(massAdditionalStock)) {
+        document.getElementById('mass-additional-stock').value = ((massDesiredConcentration * massDesiredConcentrationUnit * massDesiredVolume * massDesiredVolumeUnit) / (massStockConcentration * massStockConcentrationUnit * massAdditionalStockUnit)).toFixed(2);
     }
 }
 
+// 以下のupdate～系、resetForm()については元コードのままですが、基本単位更新やリセットはこのままでも動作するでしょう。
 function updateMolarityUnit() {
     const molarSolution = parseFloat(document.getElementById('molar-solution').value);
     const molarSolutionUnit = parseFloat(document.getElementById('molar-solution-unit').value);
